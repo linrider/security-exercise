@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: security-exercise
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/security_sandbox
+    username: postgres
+    password: asdasd123
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+server:
+  port: 8089
