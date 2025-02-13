@@ -12,6 +12,8 @@ import ua.learning.security_exercise.model.Customer;
 public class RegistrationService {
     private final JdbcTemplate jdbcTemplate;
     private final PasswordEncoder passwordEncoder;
+    private final ActivationServise activationServise;
+    private final EmailService emailService;
 
     public void register(Customer customer) {
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
@@ -19,5 +21,7 @@ public class RegistrationService {
         jdbcTemplate.update("INSERT INTO customer (username, password, email, role) " +
                 "VALUES (?, ?, ?, ?)",
                 customer.getUsername(), customer.getPassword(), customer.getEmail(), customer.getRole());
+        String key = activationServise.saveActivation(customer.getEmail());
+        emailService.sendActivationEmail(customer.getEmail(), key);
     }
 }

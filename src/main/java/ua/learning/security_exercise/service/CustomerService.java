@@ -34,10 +34,9 @@ public class CustomerService {
         }
     }
 
-    @SuppressWarnings("deprecation")
     public Optional<Customer> findByUsername(String username) {
-        return jdbcTemplate.query("select * from customer where username=?", new Object[] { username },
-                new BeanPropertyRowMapper<>(Customer.class))
+        return jdbcTemplate.query("select * from customer where username=?", 
+                new BeanPropertyRowMapper<>(Customer.class), username)
                 .stream()
                 .findAny();
     }
