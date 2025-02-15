@@ -16,17 +16,17 @@ public class ActivationServise {
 
  public String saveActivation(String email) {
         String code = generateCode();
-        jdbcTemplate.update("INSERT INTO activation (person_email, key) VALUES (?, ?)", email, code);
+        jdbcTemplate.update("INSERT INTO activation (customer_email, key) VALUES (?, ?)", email, code);
         return code;
     } 
 
     public boolean activateAccount(String key) {
-        Optional<Customer> customer = jdbcTemplate.query("SELECT person.* FROM person JOIN activation ON " + 
+        Optional<Customer> customer = jdbcTemplate.query("SELECT customer.* FROM customer JOIN activation ON " + 
         "customer.email = activation.customer_email WHERE activation.key=?", new BeanPropertyRowMapper<>(Customer.class), key)
         .stream()
         .findAny();
         if (customer.isPresent()) {
-            jdbcTemplate.update("UPDATE customer SET enable=true WHERE person.id=?", customer.get().getId());
+            jdbcTemplate.update("UPDATE customer SET enable=true WHERE customer.id=?", customer.get().getId());
             jdbcTemplate.update("DELETE FROM activation WHERE key=?", key);
             return true;
         }

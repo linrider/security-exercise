@@ -18,9 +18,10 @@ public class RegistrationService {
     public void register(Customer customer) {
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
         customer.setRole("ROLE_USER");
-        jdbcTemplate.update("INSERT INTO customer (username, password, email, role) " +
-                "VALUES (?, ?, ?, ?)",
-                customer.getUsername(), customer.getPassword(), customer.getEmail(), customer.getRole());
+        customer.setEnable(false);
+        jdbcTemplate.update("INSERT INTO customer (username, password, email, role, enable) " +
+                "VALUES (?, ?, ?, ?, ?)",
+                customer.getUsername(), customer.getPassword(), customer.getEmail(), customer.getRole(), customer.isEnable());
         String key = activationServise.saveActivation(customer.getEmail());
         emailService.sendActivationEmail(customer.getEmail(), key);
     }
