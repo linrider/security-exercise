@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body>
+    <h3 th:text="${'Hello, ' + customer.getUsername() + '!'}"></h3>
+    <br>
+    <form
+        th:if="${customer.role != 'ROLE_USER'}"
+        th:action="@{/admin}"
+      >
+        <button type="submit">Administration</button>
+      </form>
+    <br />
+    <a href="/auth/logout">
+      <button>Logout</button>
+    </a>
+  </body>
+</html>

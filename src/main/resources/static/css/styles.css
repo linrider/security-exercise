@@ -1,0 +1,43 @@
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: gray;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: lightskyblue;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    button {
+      padding: 5px 10px;
+      border: none;
+      cursor: pointer;
+    }
+    .make-admin {
+      background-color: green;
+      color: white;
+    }
+    .delete-user {
+      background-color: red;
+      color: white;
+    }
+

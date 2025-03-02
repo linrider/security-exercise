@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: security-exercise
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/security_sandbox
+    username: postgres
+    password: asdasd123
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope: email,profile
+        provider:
+          google:
+            token-uri: https://oauth2.googleapis.com/token
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: sub
+          
+server:
+  port: 8089
+
+mail:
+  username: ${EMAIL_LOGIN}
+  password: ${EMAIL_PASSWORD}
+
+remember:
+  me:
+    key: hr8734r784th8whcjme9tru894U(*n89mpo)
