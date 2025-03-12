@@ -2,7 +2,6 @@ package ua.learning.security_exercise.service;
 
 import java.util.Collections;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -13,11 +12,13 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import ua.learning.security_exercise.model.Customer;
+import ua.learning.security_exercise.security.OAuth2Customer;
 
 @Service
 @RequiredArgsConstructor
 public class CustomOAuth2CustomerService extends DefaultOAuth2UserService {
     private final RegistrationService registrationService;
+    private final CustomerService customerService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -28,6 +29,15 @@ public class CustomOAuth2CustomerService extends DefaultOAuth2UserService {
         return new DefaultOAuth2User(Collections.singletonList(new SimpleGrantedAuthority(customer.getRole())),
                 oAuth2User.getAttributes(), "email");
 
+    }
+
+    public OAuth2User loadRemember(String email) {
+        Customer customer = customerService.findByEmail(email).get();
+        OAuth2Customer oAuth2Customer = new OAuth2Customer(customer);
+        return new DefaultOAuth2User(Collections.singletonList(
+            new SimpleGrantedAuthority(customer.getRole())), 
+            oAuth2Customer.getAttributes(), 
+            "email");
     }
 
 }

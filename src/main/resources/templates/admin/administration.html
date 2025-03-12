@@ -1,64 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Administration</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
-  </head>
-  <body>
-    <h3>Administration</h3>
-    <h4 th:if="${admin}" th:text="${'Hello, ' + admin.getUsername() + '!'}"></h4>
-    <h4 th:if="${rootadmin}" th:text="${'Hello, ' + rootadmin.getUsername() + '!'}"></h4>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Role</th>
-          <th>Action</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Users (Can be promoted to Admin) -->
-        <tr th:each="customer : ${users}">
-          <td th:text="${customer.username}"></td>
-          <td>User</td>
-          <td>
-            <form th:if="${rootadmin}" th:action="@{/admin/make-admin}" th:method="PUT">
-              <input type="hidden" name="id" th:value="${customer.id}" />
-              <button type="submit" class="make-admin">Make Admin</button>
-            </form>
-          </td>
-          <td>
-            <form th:action="@{/admin/delete}" th:method="delete"
-                  onsubmit="return confirm('Are you sure you want to delete this user?');">
-              <input type="hidden" name="id" th:value="${customer.id}" />
-              <button type="submit" class="delete-user">Delete</button>
-            </form>
-          </td>
-        </tr>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administration</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
 
-        <!-- Admins (Can be demoted to User) -->
-        <tr th:each="customer : ${admins}" th:if="${rootadmin}">
-          <td th:text="${customer.username}"></td>
-          <td>Admin</td>
-          <td>
-            <form th:action="@{/admin/return-user}" th:method="PUT">
-              <input type="hidden" name="id" th:value="${customer.id}" />
-              <button type="submit" class="make-admin">Return to User</button>
-            </form>
-          </td>
-          <td>
-            <form th:action="@{/admin/delete}" th:method="delete"
-                  onsubmit="return confirm('Are you sure you want to delete this admin?');">
-              <input type="hidden" name="id" th:value="${customer.id}" />
-              <button type="submit" class="delete-user">Delete</button>
-            </form>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </body>
+<body>
+  <h3>Administration</h3>
+  <h4 th:if="${admin}" th:text="${'Hello, ' + admin.getUsername() + '!'}"></h4>
+  <h4 th:if="${rootadmin}" th:text="${'Hello, ' + rootadmin.getUsername() + '!'}"></h4>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Action</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Users (Can be promoted to Admin) -->
+      <tr th:each="customer : ${users}">
+        <td th:text="${customer.username}"></td>
+        <td>User</td>
+        <td>
+          <form th:if="${rootadmin}" th:action="@{/admin/make-admin}" th:method="PUT">
+            <input type="hidden" name="id" th:value="${customer.id}" />
+            <button type="submit" class="make-admin">Make Admin</button>
+          </form>
+        </td>
+        <td>
+          <form th:action="@{/admin/delete}" th:method="delete"
+            onsubmit="return confirm('Are you sure you want to delete this user?');">
+            <input type="hidden" name="id" th:value="${customer.id}" />
+            <button type="submit" class="delete-user">Delete</button>
+          </form>
+        </td>
+      </tr>
+
+      <!-- Admins (Can be demoted to User) -->
+      <tr th:each="customer : ${admins}" th:if="${rootadmin}">
+        <td th:text="${customer.username}"></td>
+        <td>Admin</td>
+        <td>
+          <form th:action="@{/admin/return-user}" th:method="PUT">
+            <input type="hidden" name="id" th:value="${customer.id}" />
+            <button type="submit" class="make-admin">Return to User</button>
+          </form>
+        </td>
+        <td>
+          <form th:action="@{/admin/delete}" th:method="delete"
+            onsubmit="return confirm('Are you sure you want to delete this admin?');">
+            <input type="hidden" name="id" th:value="${customer.id}" />
+            <button type="submit" class="delete-user">Delete</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <form action="/">
+    <button type="submit">Back to personal page</button>
+  </form>
+</body>
+
 </html>
